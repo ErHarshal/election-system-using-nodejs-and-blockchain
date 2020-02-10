@@ -25,7 +25,7 @@ const getData = () => new Promise((resolve, reject) => {
 const compiler = () => new Promise((resolve, reject)=>{
     accounts = web3.eth.getAccounts().then((res) => {
         const path1 = path.join(__dirname, '../../contractAddress/Election.json');
-        const ElectionPath = path.resolve(__dirname,"../../ethereum/contracts","Election.sol");
+        const ElectionPath = path.resolve(__dirname,"../../allContracts/contracts","Election.sol");
         const input = fs.readFileSync(ElectionPath,'UTF-8');
         const output = solc.compile(input.toString(), 1);
         const bytecode = output.contracts[':Election'].bytecode;
