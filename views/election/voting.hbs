@@ -1,0 +1,140 @@
+<html>
+    <head><title>Election</title></head>
+    <body>
+      <div style="
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 20px;
+        text-align: center;
+      ">
+        <table style="text-align: center; padding-left: 40%;">
+            <thead>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Votes</th>
+            </thead>
+            <tbody>
+                    <td>1</td>
+                    <td>Candidate1</td>
+                    <td id="votecount1">{{data.voteCount1}}</td>
+            </tbody>
+            <tbody>
+                    <td>2</td>
+                    <td>Candidate2</td>
+                    <td id="votecount2">{{data.voteCount2}}</td>
+            </tbody>
+        </table>
+        </div><br>
+        <div style="text-align: center">
+          <label>Select Account : </label>
+            <select id="AccountList" class="Accounts">
+              </select>
+        <br><br>
+        <label>Select Candidate : </label>
+        <select id="AccountList1" class="Accounts1">
+          <option value=1>{{data.candidate1}}</option>
+        <option value=1>{{data.candidate2}}</option>
+        </select><br><br>
+        <button id="vote">vote</button>
+        <input type="text" id="selecytedAccount" style="display: none">
+        <input type="text" id="selecytedCandiadte" style="display: none">
+        <input type="text" id="accounts1" value="{{data.accounts}}" style="display: none">
+        
+      </div>
+    </body>
+</html>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  let mydata =document.getElementById("accounts1").value;
+    console.log(mydata);
+    let result = mydata.split(",");
+    console.log(result);
+      result.forEach((element) => {
+          $('#AccountList').append(`<option value="${element}">"${element}"</option>`)  
+      });
+
+    
+    $(document).ready(function(){
+    $("select.Accounts").change(function(){
+        let selectedAccount = $(this).children("option:selected").val();
+        document.getElementById("selecytedAccount").value=selectedAccount;
+    });
+    $("select.Accounts1").change(function(){
+        let selectedCandidate = $(this).children("option:selected").val();
+        document.getElementById("selecytedCandiadte").value=selectedCandidate;
+    });
+});
+
+
+    instance.methods.candidatesCount().call(function(err,res){
+        if(res){
+            console.log("candidate count = ",res);    
+        }else{
+            console.log(err);
+        }
+    })
+
+
+    instance.methods.candidates(1).call(function(err,result){
+        if(result){
+            document.getElementById("votecount1").innerHTML=result.voteCount;
+        }else{
+            console.log("error",err);
+        }
+    });
+
+    instance.methods.candidates(2).call(function(err,result){
+        if(result){
+            document.getElementById("votecount2").innerHTML=result.voteCount;
+        }else{
+            console.log("error",err);
+        }
+    });
+
+instance.methods.candidatesCount().call(function(err,res){
+  if(res){
+  res=parseInt(res)+1;
+      for(i=1;i<res;i++)
+      {
+        instance.methods.candidates(i).call(function(err,result){
+          if(result){
+            $('#AccountList1').append(`<option value=${result.id}>${result.name}</option>`);
+          }else{
+              console.log("error",err);
+          }
+      });
+      }
+  }else{
+    console.log(err);
+  }
+});
+    
+    $('#vote').click(function(event){
+      let account = document.getElementById("selecytedAccount").value;
+      let id = document.getElementById("selecytedCandiadte").value;
+      if(id != ""){
+      instance.methods.isVoted(account).call(function(err,result){
+        console.log("result--2",result);
+        if(result==0){
+          console.log("selected",account);
+          instance.methods.vote(id).send({from:account},function(err,res){
+            if(res){
+            console.log(res);
+            location.reload();
+            }
+            else{
+            console.log(err);
+            }
+         });      
+        }
+        else{
+          alert("voter alredy voted !!!");
+        }  
+    });
+    }else{
+      alert("Please enter candidate ID");
+    }
+  })
+</script>
+

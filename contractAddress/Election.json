@@ -1,0 +1,90 @@
+{
+    "address": "0xb50c6e36950d65F0d0Fd387abaC8b1D83286B4D0",
+    "abi": [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_id",
+                    "type": "uint256"
+                }
+            ],
+            "name": "vote",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function",
+            "signature": "0x0121b93f"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "candidatesCount",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function",
+            "signature": "0x2d35a8a2"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "candidates",
+            "outputs": [
+                {
+                    "name": "id",
+                    "type": "uint256"
+                },
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "voteCount",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function",
+            "signature": "0x3477ee2e"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "_addr",
+                    "type": "address"
+                }
+            ],
+            "name": "isVoted",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function",
+            "signature": "0xcbff75cb"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor",
+            "signature": "constructor"
+        }
+    ]
+}
