@@ -1,5 +1,5 @@
 {
-  "name": "Election",
+  "name": "election-system",
   "version": "",
   "dependencies": {
     "express": "^4.17.1",

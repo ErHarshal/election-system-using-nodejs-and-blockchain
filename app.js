@@ -3,9 +3,20 @@ const path = require('path');
 const hbs = require('express-handlebars');
 const app = express();
 var http = require('http');
+const bodyParser = require('body-parser');
 
 const authentication = require('./routes/authentication/index'); 
 const hello = require('./routes/authentication/index'); 
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  'extended': false
+}));
+// app.use((req, res, next) => {
+//   res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+//   next();
+// });
 
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -8,7 +8,11 @@ const path = require('path');
 const fs = require('fs');
 const jsonFile = require('jsonfile');
 const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
-let accounts;
+const path1 = path.join(__dirname, '../../contractAddress/Election.json');
+const contractAddress = jsonFile.readFileSync(path1);
+const address = contractAddress.address;
+const abi = contractAddress.abi;
+const instance = new web3.eth.Contract(abi,address);
 
 
 const getData = () => new Promise((resolve, reject) => {
@@ -62,11 +66,6 @@ const compiler = () => new Promise((resolve, reject)=>{
 });
 
 const depoyContract = () => new Promise((resolve, reject)=>{
-        let path1 = path.join(__dirname, '../../contractAddress/Election.json');
-        let contractAddress = jsonFile.readFileSync(path1);
-        let address = contractAddress.address;
-        let abi = contractAddress.abi;
-        let instance = new web3.eth.Contract(abi,address);
         let voteCount1;
         let voteCount2;
         let accounts;
@@ -97,8 +96,32 @@ const depoyContract = () => new Promise((resolve, reject)=>{
         });
 });
 
+const vote = (data) => new Promise((resolve, reject) => {
+    instance.methods.isVoted(data.account).call(function(err,result){
+        console.log("result--2",result);
+        if(result==0){
+          console.log("selected",data.account);
+          instance.methods.vote(data.id).send({from:data.account},function(err,res){
+            if(res){
+            console.log(res);
+            resolve(res)
+            }
+            else{
+            console.log(err);
+            reject({message:"something went wrong !!!"});
+            }
+         });      
+        }
+        else{
+          console.log("voter alredy voted !!!");
+          reject({message:"voter alredy voted !!!"});
+        }  
+    });
+})
+
 module.exports = {
     getData,
     compiler,
-    depoyContract
+    depoyContract,
+    vote
 }

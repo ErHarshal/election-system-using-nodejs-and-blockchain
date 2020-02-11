@@ -45,4 +45,17 @@ router.get('/compiler', (req, res) => {
     });
 });
 
+router.post('/vote', (req, res) => {
+    authCtr.vote(req.body).then((res) => {
+        res.json({
+            hash:res
+        })
+        console.log("result-->",res);
+    }).catch((err) => {
+        console.log("Error-->",err);
+        res.json({
+            message:err.message
+        })
+    });
+});
 module.exports = router;
