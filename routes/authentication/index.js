@@ -46,9 +46,10 @@ router.get('/compiler', (req, res) => {
 });
 
 router.post('/vote', (req, res) => {
-    authCtr.vote(req.body).then((res) => {
+    authCtr.vote(req.body).then((result) => {
         res.json({
-            hash:res
+            hash:result,
+            message:"voted successfully"
         })
         console.log("result-->",res);
     }).catch((err) => {

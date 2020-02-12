@@ -28,16 +28,16 @@ const getData = () => new Promise((resolve, reject) => {
 });
 const compiler = () => new Promise((resolve, reject)=>{
     accounts = web3.eth.getAccounts().then((res) => {
-        const path1 = path.join(__dirname, '../../contractAddress/Election.json');
+        // const path1 = path.join(__dirname, '../../contractAddress/Election.json');
         const ElectionPath = path.resolve(__dirname,"../../allContracts/contracts","Election.sol");
         const input = fs.readFileSync(ElectionPath,'UTF-8');
         const output = solc.compile(input.toString(), 1);
         const bytecode = output.contracts[':Election'].bytecode;
-        const abi = JSON.parse(output.contracts[':Election'].interface);
-        console.log(abi);
-        console.log(abi.toString());
+        const abi1 = JSON.parse(output.contracts[':Election'].interface);
+        console.log(abi1);
+        console.log(abi1.toString());
         const gasEstimate = web3.eth.estimateGas({ data: '0x' + bytecode });
-        const contract = new web3.eth.Contract(abi,res[1]);
+        const contract = new web3.eth.Contract(abi1,res[1]);
         // const instance = contract.deploy({data:'0x'+bytecode});
 
         contract.deploy({
@@ -46,17 +46,17 @@ const compiler = () => new Promise((resolve, reject)=>{
         .send({
             from: res[1],
             gas: 1500000,
-            gasPrice: '30000000000000'
+            gasPrice: '300000'
         })
         .then(function(newContractInstance){
             console.log("newContractInstance",newContractInstance.options.address) // instance with the new contract address
-            contractAddress = {
+           let contractAddress1 = {
                 'address': newContractInstance.options.address,
-                'abi': abi
+                'abi': abi1
             };
-            fs.writeFileSync(path1, JSON.stringify(contractAddress, null, 4), { spaces: 2 });
+            fs.writeFileSync(path1, JSON.stringify(contractAddress1, null, 4), { spaces: 2 });
+            resolve()
         });
-        resolve()
         // console.log(instance);;
         // console.log(instance.methods);
     }).catch((err) => {

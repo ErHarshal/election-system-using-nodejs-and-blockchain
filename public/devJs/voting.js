@@ -32,6 +32,7 @@ $('#vote').click(function(event){
             success: function (data) {
                 alert(data.message);
                 console.log("sdfsad",data.message)
+                location.reload();
                 // showSuccess(data.message)
                 //window.location.href = data.url;
             },
