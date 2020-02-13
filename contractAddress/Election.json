@@ -1,5 +1,6 @@
 {
-    "address": "0x11cac0f1Fe4262b730Ab8Dc464b10901E1CE61D9",
+    "contract Name": "Election",
+    "address": "0x5d3988C67CF0dA912265b78E2B8a30D8bcc9fE72",
     "abi": [
         {
             "constant": false,

@@ -8,13 +8,13 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/app.js"
+            "program": "${workspaceFolder}/allContracts/deployContracts/election.js",
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/routes/authentication/index.js"
+            "name": "web App",
+            "program": "${workspaceFolder}/app.js"
         }
     ]
 }
